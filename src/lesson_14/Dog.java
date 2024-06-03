@@ -28,7 +28,6 @@ public class Dog {
             eat();
         }
 
-
         System.out.println("Я бегу!");
         weight -= 2;
     }
