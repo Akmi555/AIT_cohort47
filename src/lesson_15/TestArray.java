@@ -27,5 +27,11 @@ public class TestArray {
         magicArray.remove(4);
         System.out.println(magicArray.toString());
 
+        int[] array = {1, 2, 3};
+
+
+        magicArray.add(15, 156, 64, 43);
+        System.out.println(magicArray.toString());
+
     }
 }

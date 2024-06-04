@@ -5,8 +5,8 @@ package lesson_15;
 */
 
 public class MagicArray {
-    int[] array;
-    int cursor; // присвоено значение по умолчанию - 0
+    private int[] array;
+    private int cursor; // присвоено значение по умолчанию - 0
 
     public MagicArray() {
         array = new int[10];
@@ -105,6 +105,8 @@ public class MagicArray {
         }
         return sb.toString();
     }
+
+
 
 }
 
