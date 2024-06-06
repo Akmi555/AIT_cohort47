@@ -15,6 +15,7 @@ public class StaticBlockDemo {
 
     // Статический блок инициализации
     static {
+        counter = 10;
         System.out.println("Static init block start!");
         strings = new String[3];
         strings[0] = "Blue";

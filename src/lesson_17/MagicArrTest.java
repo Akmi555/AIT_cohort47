@@ -36,6 +36,10 @@ public class MagicArrTest {
         System.out.println(mArray.set(4, 1000));
         System.out.println(mArray);
 
+        System.out.println(FinalDemo.PI);
+        String[] colors = FinalDemo.colors;
+        System.out.println(Arrays.toString(colors));
+
 
     }
 }
