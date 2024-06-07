@@ -1,4 +1,4 @@
-package homework_16;
+package homework_17;
 /*
 @date 06.06.2024
 @author Sergey Bugaienko
@@ -43,27 +43,30 @@ public class Dog {
         maxJump = jumpHeight * MAX_JUMP_MULTIPLIER;
     }
 
-    public void getBarrier(int barrier) {
+    public boolean getBarrier(int barrier) {
         if (jumpHeight >= barrier) {
             jump();
-            return;
+            return true;
         }
+
         if (maxJump >= barrier) {
-            //может взять //надо тренировать
-            System.out.println(name + " идет тренироваться");
+            //может взять
+            //надо тренировать
 
             while (jumpHeight < barrier) {
                 train();
             }
             jump();
-
-            System.out.printf("Собака %s перепрыгивает барьер %d. Текущий прыжок %d\n", name, barrier, jumpHeight);
+            return true;
+//            System.out.printf("Собака %s перепрыгивает барьер %d. Текущий прыжок %d\n", name, barrier, jumpHeight);
         } else {
-            System.out.printf("Барьер высотой %d собака %s взять не может. Текущий прыжок %d\n", barrier, name, jumpHeight);
+//            System.out.printf("Барьер высотой %d собака %s взять не может. Текущий прыжок %d\n", barrier, name, jumpHeight);
+            return false;
         }
     }
 
     public void train() {
+
         if (jumpHeight < maxJump) {
             jumpHeight += INCREASE_PER_TRAINING;
         }
@@ -71,20 +74,9 @@ public class Dog {
         if (jumpHeight > maxJump) {
             jumpHeight = maxJump;
         }
-
-
-//        if (jumpHeight + INCREASE_PER_TRAINING > maxJump) {
-//            System.out.println(jumpHeight + " | " + maxJump);
-////            System.out.println("Тренироваться запрещено");
-//        } else {
-//            System.out.println("Training");
-//            jumpHeight += INCREASE_PER_TRAINING; // Увеличиваем на 10 за одну тренировку
-//        }
     }
 
     public void jump() {
-
-        System.out.println(name + " Прыгнула!");
         totalJumpCounter++;
     }
 
