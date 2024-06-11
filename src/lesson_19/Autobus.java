@@ -68,7 +68,7 @@ public class Autobus {
         if (countPassenger < capacity) {
             // Место есть
             // добавляем пассажира в автобус
-            if (isPassengerInBus(passenger)) {
+            if (isPassengerInBus(passenger) >= 0) {
                 //Если такой пассажир уже в автобусе - прекращаем работу метода.
                 System.out.printf("Пассажир %s id: %d уже в автобусе\n", passenger.getName(), passenger.getId());
                 return false;
@@ -84,37 +84,90 @@ public class Autobus {
 
     }
 
-    private boolean isPassengerInBus(Passenger passenger) {
+    private int isPassengerInBus(Passenger passenger) {
         for (int i = 0; i < countPassenger; i++) {
             if (passengers[i].getId() == passenger.getId()) {
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
     public boolean dropOfPassenger(Passenger passenger) {
-        // TODO Реализовать метод высадки пассажира из автобуса
+        if (passenger == null) return false;
         /*
         Убедиться, что пассажир в автобусе
         "удалить" его из массива.
         Сдвинуть всех пассажиров "справа" от него. Не забыть изменить counter
-
          */
-        passengers[5] = null;
-        return false;
+
+        int index = isPassengerInBus(passenger);
+
+        if (index < 0) {
+            // Пассажира нет в автобусе
+            System.out.printf("Пассажир с id %d в автобусе не найден!\n", passenger.getId());
+            return false;
+        }
+
+        // Можно взять ссылку на удаляемого пассажира из аргумента метода.
+        Passenger tempPassenger = passengers[index];
+
+        for (int i = index + 1; i < countPassenger; i++) {
+            passengers[i - 1] = passengers[i];
+        }
+        // не обязательная строка
+        passengers[countPassenger - 1] = null;
+
+        countPassenger--;
+
+        System.out.printf("Пассажир %s с id %d вышел из автобуса\n", tempPassenger.getName(), tempPassenger.getId());
+        return true;
     }
 
+    public String getPassengersList() {
+        /*
+        Перебрать список пассажиров
+        Склеить строку из пассажиров (в едином виде id + name)
+        P.S. не забыть проверять пассажиров на null
+         */
+
+        StringBuilder sb = new StringBuilder("{");
+        for (int i = 0; i < passengers.length; i++) {
+            if (passengers[i] != null) {
+                // добавить инфо о пассажире
+                Passenger temp = passengers[i];
+                sb.append("Passenger: {id: ").append(temp.getId()).append("; name: ");
+                sb.append(temp.getName()).append("}").append("; ");
+            }
+        }
+
+        //Если пассажиров нет - в sb будет строка: "{"
+        //Отрезать два последних символа
+        if (sb.length() > 1) {
+            sb.setLength(sb.length() - 2);
+        }
+
+        sb.append("}");
+        //Если пассажиров нет, я хочу чтоб вернулось {}
+        return sb.toString();
+    }
 
     public int getCountPassenger() {
         return countPassenger;
     }
 
     public String toString() {
-        // TODO переписать, используя StringBuilder
-        return "Autobus: {id: " + id +  "; capacity:" + capacity +
-                "; driver: " + driver.toString() +
-                "; autopilot: " + autopilot.toString() + " }" ;
+        StringBuilder sb = new StringBuilder("Autobus: {id: ");
+        sb.append(id).append("; capacity:").append(capacity);
+        sb.append("; driver: ").append(driver.toString());
+        sb.append("; autopilot: ").append(autopilot.toString())
+                .append(" }");
+
+        return sb.toString();
+
+//        return "Autobus: {id: " + id +  "; capacity:" + capacity +
+//                "; driver: " + driver.toString() +
+//                "; autopilot: " + autopilot.toString() + " }" ;
     }
 
     public int getId() {
@@ -139,7 +192,7 @@ public class Autobus {
         return autopilot;
     }
 
-    public void updateAutopilotSoftware(String softVersion){
+    public void updateAutopilotSoftware(String softVersion) {
         this.autopilot.setSoftwareVersion(softVersion);
     }
 }
