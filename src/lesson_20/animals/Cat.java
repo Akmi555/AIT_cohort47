@@ -17,7 +17,13 @@ public class Cat extends Animal {
         System.out.println("Cat say MEOW!!!");
     }
 
+    // Уникальный функционал кота
     public void eat() {
         System.out.println("Cat eating");
+    }
+
+    @Override
+    public String toString() {
+        return "Cat";
     }
 }
