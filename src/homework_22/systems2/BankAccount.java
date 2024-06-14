@@ -48,8 +48,7 @@ public class BankAccount extends VusaMember implements PaymentSystem {
             balance -= amountEur;
             recipient.depositTransfer(amountBtc);
 
-            System.out.printf("Успех! Перевод %.2f EUR (%s) -> %.2f BTC (%s)\n", amountEur, title, amountBtc, recipient.getTitle());
-            return true;
+             return true;
         }
 
         System.out.println("Что-то пошло не так с получателем перевода");
