@@ -54,5 +54,34 @@ public class ListApp {
 
         // Явная упаковка int в Integer
         System.out.println(integerList.remove(Integer.valueOf(500)));
+
+        MagicList<String> stringsList = new MagicList<>(new String[]{"Hello", "Java", "Python", "JS"});
+
+        System.out.println(stringsList);
+
+        stringsList.set(2, "Orange");
+        System.out.println(stringsList);
+
+        System.out.println(stringsList.indexOf("Java"));
+        System.out.println("stringsList.contains('hello'): " + stringsList.contains("hello"));
+        System.out.println("stringsList.contains('Hello'): " + stringsList.contains("Hello"));
+
+        String valueSrt = stringsList.get(3);
+        System.out.println(valueSrt);
+
+        System.out.println(stringsList.remove(3));
+        System.out.println(stringsList.remove("Hello"));
+        System.out.println(stringsList);
+
+        System.out.println(stringsList.isEmpty());
+        System.out.println(stringsList.size());
+
+        String[] arrayStr = stringsList.toArray();
+        System.out.println("arrayStr.length: " + arrayStr.length);
+
+        stringsList.addAll("Tree", "Red", "Dog", "Animal");
+        System.out.println(stringsList);
+
+
     }
 }
