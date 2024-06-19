@@ -20,5 +20,6 @@ public class UsersUtil {
         if (admin.getRole() == Role.ADMIN) {
             user.setRole(Role.USER);
         }
+
     }
 }
