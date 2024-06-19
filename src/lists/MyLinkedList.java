@@ -4,7 +4,10 @@ package lists;
 @author Sergey Bugaienko
 */
 
-public class MyLinkedList<T> implements MyQueue<T> {
+import java.lang.reflect.Array;
+import java.util.Iterator;
+
+public class MyLinkedList<T> implements MyList<T>, MyQueue<T>, Iterable<T> {
 
     private int size;
     private Node<T> first; // голова
@@ -64,7 +67,7 @@ public class MyLinkedList<T> implements MyQueue<T> {
     // Индекс последнего (самого правого) вхождения
     public int lastIndexOf(T value) {
 
-        int index = size -1;
+        int index = size - 1;
         Node<T> cursor = last;
         while (cursor != null) {
             if (cursor.value.equals(value)) {
@@ -86,10 +89,31 @@ public class MyLinkedList<T> implements MyQueue<T> {
         return -1;
     }
 
-//    @Override
+    //    @Override
     public boolean contains(T value) {
         return indexOf(value) >= 0;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T[] toArray() {
+
+        if (first == null) return null;
+
+        T[] result = (T[]) Array.newInstance(first.value.getClass(), size);
+
+        Node<T> cursor = first;
+        int index = 0;
+        while (cursor != null) {
+            result[index++] = cursor.value;
+            ;
+//            index++;
+            cursor = cursor.next;
+        }
+
+        return result;
+    }
+
 
     public int lastIndexOfV2(T value) {
         int result = -1;
@@ -111,32 +135,34 @@ public class MyLinkedList<T> implements MyQueue<T> {
         return size == 0;
     }
 
-//    @Override
+    //    @Override
     public T get(int index) {
         // Перебирать ноды, считая "виртуальный" индекс.
         // Если добрались до ноды и индекс стал равен искомому - вернуть значение Ноды
 
         Node<T> node = searchNodeByIndex(index);
-        return  node != null ? node.value : null;
+        return node != null ? node.value : null;
+    }
 
+    public T getV2(int index) {
         //Old realisation
-//        if (index <0 || index > size -1) return null;
-//
-//        int idx = 0;
-//        Node<T> cursor = first;
-//        while (cursor != null) {
-//            if (idx == index) {
-//                return cursor.value;
-//            }
-//            idx++;
-//            cursor = cursor.next;
-//        }
-//
-//        return null;
+        if (index < 0 || index > size - 1) return null;
+
+        int idx = 0;
+        Node<T> cursor = first;
+        while (cursor != null) {
+            if (idx == index) {
+                return cursor.value;
+            }
+            idx++;
+            cursor = cursor.next;
+        }
+
+        return null;
     }
 
 
-//    @Override
+    //    @Override
     public void set(int index, T value) {
 
         Node<T> node = searchNodeByIndex(index);
@@ -157,7 +183,7 @@ public class MyLinkedList<T> implements MyQueue<T> {
             }
         } else {
             result = last;
-            for (int i = size -1; i > index ; i--) {
+            for (int i = size - 1; i > index; i--) {
                 result = result.previous;
             }
         }
@@ -238,8 +264,83 @@ public class MyLinkedList<T> implements MyQueue<T> {
     }
 
     @Override
+    // Удаляем последний (самый правый) узел
     public T removeLast() {
-        return null;
+        if (size == 0) return null;
+
+        // Список не пустой. Удалять будем ноду Last или first (если только 1 элемент)
+        T value;
+        if (size == 1) {
+            // только нода first
+            value = first.value;
+            first = null;
+        } // сценарии в которых я удаляю last
+        else if (size == 2) {
+            value = last.value;
+            last = null;
+            first.next = null;
+        } else {
+            value = last.value;
+            last = last.previous;
+            last.next = null;
+        }
+
+        size--;
+        return value;
+    }
+
+    @Override
+    //Удаление ноды по значению
+    public boolean remove(T value) {
+        Node<T> cursor = first;
+        while (cursor != null) {
+            if (cursor.value.equals(value)) {
+                removeNode(cursor);
+                return true;
+            }
+
+            cursor = cursor.next;
+        }
+
+        return false;
+    }
+
+    private void removeNode(Node<T> node) {
+        if (node == first) {
+            removeFirst();
+            return;
+        }
+
+        if (node == last) {
+            removeLast();
+            return;
+        }
+
+        //какая-то нода посередине списка
+
+        node.previous.next = node.next;
+        node.next.previous = node.previous;
+
+        // не обязательно
+        node.next = null;
+        node.previous = null;
+
+        size--;
+    }
+
+    // Удаление ноды по индексу
+    @Override
+    public T remove(int index) {
+        Node<T> node = searchNodeByIndex(index);
+
+        // пришел не корректный индекс - не смогли найти ноду по индексу
+        if (node == null) return null;
+
+        T value = node.value;
+
+        removeNode(node);
+
+        return value;
     }
 
 
@@ -258,6 +359,34 @@ public class MyLinkedList<T> implements MyQueue<T> {
 
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T> {
+
+        Node<T> item;
+
+        public MyIterator() {
+            this.item = first;
+        }
+
+        // Проверяет есть ли следующий элемент
+        @Override
+        public boolean hasNext() {
+            return item != null;
+        }
+
+        //Возвращает следующий элемент коллекции
+        @Override
+        public T next() {
+            T value = item.value;
+            item = item.next;
+            return value;
+        }
     }
 
 
