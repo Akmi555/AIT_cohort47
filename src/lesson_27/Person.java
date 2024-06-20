@@ -1,4 +1,4 @@
-package lesson_26.persons;
+package lesson_27;
 /*
 @date 19.06.2024
 @author Sergey Bugaienko
