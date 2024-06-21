@@ -45,6 +45,8 @@ public class Person {
         // 2. Точка после собаки
         if (email.indexOf('.', indexAt) == -1) return false;
 
+        if (email.charAt(indexAt + 1) == '.') return false;
+
         //3. после последней точки 2 или более символов
         if (email.lastIndexOf('.') >= email.length() - 2) return false;
 

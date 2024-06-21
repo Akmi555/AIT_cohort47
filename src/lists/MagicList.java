@@ -221,18 +221,23 @@ public class MagicList<T> implements MyList<T>, Iterable<T> {
 
     private class Iter implements Iterator<T> {
 
+        int currentIndex;
         // перебирать индексы.
         // текущий индекс сравнить кол-вом элементов
-        // Взять значение - просто взять по индексу. И переключиться на след.индекс
+        // Взять значение - просто взять по индексу.
+        // И переключиться на след.индекс
 
         @Override
         public boolean hasNext() {
-            return false;
+            return currentIndex < cursor;
         }
 
         @Override
         public T next() {
-            return null;
+//            T value = array[currentIndex];
+//            currentIndex++;
+//            return value;
+            return array[currentIndex++];
         }
     }
 }
