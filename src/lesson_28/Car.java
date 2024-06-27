@@ -9,6 +9,7 @@ public class Car implements Comparable<Car> {
     private int year;
     private  int maxSpeed;
 
+
     public Car(String model, int year, int maxSpeed) {
         this.model = model;
         this.year = year;
