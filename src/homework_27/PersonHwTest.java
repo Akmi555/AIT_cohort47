@@ -4,7 +4,6 @@ package homework_27;
 @author Sergey Bugaienko
 */
 
-import lesson_27.Person;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +36,7 @@ public class PersonHwTest {
     @ParameterizedTest
     @MethodSource("invalidEmailData")
     void testSetInvalidEmail(String invalidEmail) {
+        System.out.println("current Person: " + person);
         person.setEmail(invalidEmail);
 
         Assertions.assertEquals(startEmail, person.getEmail());
