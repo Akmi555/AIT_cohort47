@@ -39,7 +39,7 @@ import java.util.Map;
 public class Task1 {
     public static void main(String[] args) {
 
-        String text = "Строка для проверки количества   вхождений слов" +
+        String text = "Строка для, проверки количества   вхождений слов" +
                 ".\n Строка для проверки  и теста. и количества слов для проверки";
 
         Map<String, Integer> frequencyMap = frequencyDictionary(text);
@@ -50,11 +50,42 @@ public class Task1 {
         System.out.println("Option3: " + frequencyDictionary3(text));
         System.out.println("Option4: " + frequencyDictionary4(text));
 
-//        Map<Character, Integer> frequencyCharsMap = frequencyCharsDictionary(text);
+        System.out.println();
+
+        Map<Character, Integer> frequencyCharsMap = frequencyCharsDictionary(text);
+        System.out.println("Chars: " + frequencyCharsMap);
+        System.out.println("Chars2: " + frequencyCharsDictionary2(text));
 
 //        System.out.println("\nВхождение символов: ");
 //        frequencyCharsMap.forEach((k, v) -> System.out.print("'" + k + "': " + v + "; "));
 //        System.out.println();
+    }
+
+    private static Map<Character, Integer> frequencyCharsDictionary(String text) {
+        String[] words = text.replaceAll("[^a-zA-Zа-яА-Я ]", "").split("\\s+");
+
+        Map<Character, Integer> result = new HashMap<>();
+
+        //перебираю слова
+        for (String word : words) {
+            //перебираю буквы в слове
+            for (Character ch : word.toCharArray()) {
+                result.compute(ch, (key, oldValue) -> oldValue == null ? 1 : oldValue + 1);
+            }
+        }
+        return result;
+    }
+
+    private static Map<Character, Integer> frequencyCharsDictionary2(String text) {
+
+        Map<Character, Integer> result = new HashMap<>();
+
+            //перебираю символы в строке
+            for (Character ch : text.toCharArray()) {
+                result.compute(ch, (key, oldValue) -> oldValue == null ? 1 : oldValue + 1);
+            }
+
+        return result;
     }
 
     private static Map<String, Integer> frequencyDictionary(String text) {
