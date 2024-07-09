@@ -82,7 +82,7 @@ public class InterfacesExample {
 
         System.out.println("\n ======================== \n");
 
-        // Function<T, R> - производит операцию над объектом типа T и возврщает результат типа R.
+        // Function<T, R> - производит операцию над объектом типа T и возвращает результат типа R.
         // R apply(T t)
         Function<String, Integer> integerFunction = new Function<String, Integer>() {
             @Override
