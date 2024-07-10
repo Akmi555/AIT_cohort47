@@ -6,8 +6,7 @@ package lesson_41;
 
 import lesson_40.Cat;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,8 +63,75 @@ public class StreamExample {
 //        task5();
 //        task6();
 //        task7();
-        task8();
+//        task8();
 
+//        task9();
+//        task10();
+        task11();
+    }
+
+    private static void task11() {
+        Cat cat = new Cat(null, 5, "braun");
+        Cat cat1 = new Cat("Python", 7, "white");
+        Cat cat2 = new Cat("Tiger", 3, "gray");
+        Cat cat3 = new Cat("Panda", 4, "black");
+
+        Cat[] cats = {cat, cat1, null, cat2, cat3};
+
+        // Получить список котов, вес которых больше 4 и имя длиннее 5 символов
+
+        List<Cat> bigCats = Arrays.stream(cats) // получим поток из элементов массива
+                .filter(Objects::nonNull) // убираем null из потока
+//                .filter(c -> Objects.nonNull(c))
+                .filter(c -> Objects.nonNull(c.getName())) // проверка поля на null
+                .filter(c -> c.getWeight() > 4)
+                .filter(c -> c.getName().length() > 5)
+                .collect(Collectors.toList());
+
+        System.out.println(bigCats);
+
+    }
+
+
+    private static List<Cat> getListCats() {
+        return List.of(
+                new Cat("Bear", 5, "braun"),
+                new Cat("Python", 7, "white"),
+                new Cat("Tiger", 3, "gray"),
+                new Cat("Panda", 4, "black")
+        );
+    }
+
+    private static void task10() {
+        // Получить список всех положительных чисел меньше 20 из списка.
+        List<Integer> integers = List.of(1, 12, 7, -11, 25, 12, 25, -15, -39, 10, 0);
+
+        List<Integer> integerList = integers.stream()
+                .filter(i -> i > 0)
+                .filter(i -> i < 20)
+                .collect(Collectors.toList());
+
+        System.out.println(integerList);
+    }
+
+
+    private static void task9() {
+        // Вернуть самое длинное имя кота из списка котов
+        List<Cat> cats = getListCats();
+
+//        cats = new ArrayList<>();
+
+        Optional<String> longestName = cats.stream()
+                .map(Cat::getName)
+                .max((name1, name2) -> name1.length() - name2.length());
+
+        if (longestName.isPresent()) {
+            System.out.println(longestName.get());
+        } else {
+            System.out.println("Котов с именами не найдено");
+        }
+
+        System.out.println(longestName.orElse("Коты не найдены"));
     }
 
     private static void task8() {
@@ -99,9 +165,6 @@ public class StreamExample {
                 .min(Integer::compareTo);
 
         System.out.println("min.orElse(0): " + min.orElse(0));
-
-
-
 
 
     }
@@ -177,15 +240,6 @@ public class StreamExample {
 
     }
 
-
-    private static List<Cat> getListCats() {
-        return List.of(
-                new Cat("Bear", 5, "braun"),
-                new Cat("Python", 7, "white"),
-                new Cat("Tiger", 3, "gray"),
-                new Cat("Panda", 4, "black")
-        );
-    }
 
     private static void task3() {
         List<Cat> cats = getListCats();
