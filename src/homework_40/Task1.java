@@ -1,4 +1,4 @@
-package homework_39;
+package homework_40;
 /*
 @date 10.07.2024
 @author Sergey Bugaienko
