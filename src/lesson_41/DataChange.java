@@ -22,7 +22,7 @@ public class DataChange {
     boxed() - используется для преобразования протока примитивов (IntStream, LongStream, DoubleStream)
     в поток их соответствующих оберточных классов (Stream<Integer>, ...)
 
-    // Todo
+    //
     mapToInt()
 
 
