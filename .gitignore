@@ -6,6 +6,7 @@ out/
 .idea/
 *.iml
 
+test_code/
 w_HashTable_Swing/
 
 project1/
